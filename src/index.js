@@ -1,34 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 
-const test = React.createElement('div', {
-  id: 'test-id',
-  className: 'test-class',
-  onClick: () => { alert('hello') }
-}, <div>Hello</div>);
-
-const onClick = () => { alert('hello on custom button') };
-
-const btnId = 'btn-test-id';
-
-const CustomButton = (props) => {
-  console.log(props);
-  const { id, children } = props;
-
-  return (
-    <button onClick={onClick} id={id}>{children}</button>
-  );
-};
-
-const testBtn = React.createElement(CustomButton, {
-  id: 'btn-test-2'
-}, 'Click me');
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-  <CustomButton id={btnId}>asfaf</CustomButton>,
+  <React.StrictMode>
+    <App/>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
