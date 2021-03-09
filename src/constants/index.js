@@ -69,4 +69,17 @@ export const postsList = [
             }
         }
     },
+
+
+    {
+        "id": "74",
+        "user_id": "1345",
+        "title": "sfdgjsgljsdldsklsf",
+        "body": "sogfhohgg;ohgaesnvreiasnvo;aejrvneaowjrgiaeg",
+        "links": {
+            "self": {
+                "href": "dfsdf"
+            }
+        }
+    }
 ]
