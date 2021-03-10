@@ -1,0 +1,21 @@
+.may-panel {
+  margin: 20px;
+
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-chevron {
+      img {
+        width: 35px;
+        height: 35px;
+      }
+
+      &.up {
+          transform: rotateX(180deg);
+      }
+    }
+  }
+}
