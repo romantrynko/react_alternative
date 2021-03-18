@@ -21,19 +21,21 @@ export default class Panel extends Component {
     }
 
     onChange = (event) => {
-        this.setState({ inputValue: event.target.value})
+        console.log(event);
+        console.log(event.target.value);
+        this.setState({ inputValue: event.target.value })
     }
 
     render() {
-        const { children } = this.props;
+        const { children, label } = this.props;
         const { isOpen } = this.state;
 
         return (
             <div className="may-panel card">
-            <input type="text" value={this.state.inputValue} onChange={this.onChange}></input>
+                <input type="text" value={this.state.inputValue} onChange={this.onChange}></input>
                 <div className="may-panel-header card-header">
-                    <div>Some label</div>
-                    <div className={`may-panel-header-chevron ${isOpen ? 'up' : '' }`} onClick={this.onClick}>
+                    <div>{label}</div>
+                    <div className={`may-panel-header-chevron ${isOpen ? 'up' : ''}`} onClick={this.onClick}>
                         <img src={Chevron} alt="img" />
                     </div>
                 </div>

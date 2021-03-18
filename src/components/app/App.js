@@ -45,7 +45,6 @@ export default class App extends Component {
   }
 
   render() {
-    // todo 4) достать также в строке 92 из стейта selectedOption
     const { posts } = this.state;
 
     return (
@@ -56,7 +55,7 @@ export default class App extends Component {
           Hello, world!
         </Panel>
 
-        <Panel label="test" isOpenByDefault>
+        <Panel label="Post Preview" isOpenByDefault>
           <PostPreview posts={posts} />
         </Panel>
 

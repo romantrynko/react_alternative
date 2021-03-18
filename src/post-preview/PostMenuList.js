@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import './PostPreview.scss';
 
-const CN = 'may-post-menu';
+const CN = 'may-posts-menu';
 
-export default class PostMenuList extends Component {
+export class PostMenuList extends Component {
+
+    onSelect = (id) => {
+        const { onSelect } = this.props;
+        return () => {
+            onSelect && onSelect(id);
+        }
+    }
+
     render() {
         const { posts = [] } = this.props
 
         return (
             <ul className={CN}>
                 {
-                    posts.map((post) => (<li key={post.id} className={`${CN}-option`}>{post.title}</li>))
+                    posts.map((item) => (<li key={item.id} className={`${CN}-option`} onClick={this.onSelect(item.id)}>{item.title}</li>))
                 }
             </ul>
         )
