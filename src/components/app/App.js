@@ -8,12 +8,39 @@ import { allComments, postsList, usersList } from '../../constants';
 import Card from '../user-card/UserCard';
 
 import './App.scss';
+import PostForm from '../post-form/PostForm';
+import { UsersList } from '../users-list/UsersList';
+
+const sortingOptions = ['Sort By Default', 'Sort By Author'];
 
 export default class App extends Component {
 
   state = {
-    posts: [...postsList]
+    posts: [...postsList],
+    selectedOption: sortingOptions[0],
+    users: usersList
   }
+
+  onSort = (selectedOption) => {
+    const [option1, option2] = sortingOptions;
+
+    switch (selectedOption) {
+      case option1:
+        this.onSortByDefault();
+        this.setState({
+          selectedOption: option1
+        });
+        break;
+      case option2:
+        this.onSortByAuthorClick();
+        this.setState({
+          selectedOption: option2
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
   onSortByDefault = () => {
     this.setState({
@@ -44,43 +71,63 @@ export default class App extends Component {
     })
   }
 
+  addPost = (newPost) => {
+    this.setState((prevState) => {
+      return {
+        posts: [{
+          ...newPost,
+          id: Math.random() * 10000
+        }, ...prevState.posts]
+      }
+    })
+  }
+
   render() {
-    const { posts } = this.state;
+    const { posts, selectedOption, users } = this.state;
 
     return (
       <div className="App">
         <Header />
 
-        <Panel>
-          Hello, world!
+        <Panel label="Users" >
+          <UsersList users={users} />
         </Panel>
 
-        <Panel label="Post Preview" isOpenByDefault>
+        <Panel label="Post Preview" >
           <PostPreview posts={posts} />
         </Panel>
 
-        <Panel label="Posts" >
+        <Panel label="Posts">
           <div className="d-flex">
             Sorting:
-            <button onClick={this.onSortByAuthorClick}>By author</button>
-            <button onClick={this.onSortByDefault}>By default</button>
+        <button onClick={this.onSortByAuthorClick} className="btn btn-primary">By author</button>
+            <button onClick={this.onSortByDefault} className="btn btn-primary">By default</button>
 
-            <DropDown />
+            <DropDown
+              onSelect={this.onSort}
+              selectedOption={selectedOption}
+              options={sortingOptions}
+            />
           </div>
           <div className="d-flex posts-container">
+            <PostForm
+              users={users}
+              onAddPost={this.addPost} />
             {
               posts.map((item, index) => {
                 const user = usersList.find(user => user.id === item.user_id);
                 const author = user ? `${user.first_name} ${user.last_name}` : '';
                 const comments = allComments.filter(comment => comment.post_id === item.id);
 
-                return <Card
-                  post={item}
-                  key={item.id}
-                  hasImage={index % 2 !== 0}
-                  author={author}
-                  comments={comments}
-                />;
+                return (
+                  <Card
+                    post={item}
+                    key={item.id}
+                    hasImage={index % 2 !== 0}
+                    author={author}
+                    comments={comments}
+                  />
+                )
               })
             }
           </div>

@@ -8,8 +8,10 @@ export default class Panel extends Component {
     constructor(props) {
         super(props);
 
+        const {isOpenByDefault} = props;
+
         this.state = {
-            isOpen: false,
+            isOpen: isOpenByDefault,
             inputValue: ''
         }
     }
@@ -32,7 +34,6 @@ export default class Panel extends Component {
 
         return (
             <div className="may-panel card">
-                <input type="text" value={this.state.inputValue} onChange={this.onChange}></input>
                 <div className="may-panel-header card-header">
                     <div>{label}</div>
                     <div className={`may-panel-header-chevron ${isOpen ? 'up' : ''}`} onClick={this.onClick}>

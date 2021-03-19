@@ -11,10 +11,28 @@ export default class PostPreview extends Component {
 
         const { posts } = props;
         this.state = {
-            selectedPost: posts ? posts[0].id : null
+            selectedPost: posts ? posts[3].id : null
         }
 
     };
+
+    componentDidMount() {
+        console.log("post preview componentDidMount");
+        // document.addEventListener('click', this.showMessage);
+    }
+
+    componentWillUnmount() {
+        console.log("post preview componentWillUnmount");
+        // document.removeEventListener('click', this.showMessage);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("PostPreview componentDidUpdate", this.state.selectedPost, prevState.selectedPost);
+    }
+
+    showMessage = () => {
+        alert('Hello')
+    }
 
     onPostSelect = (postId) => {
         this.setState({

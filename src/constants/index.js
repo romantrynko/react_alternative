@@ -1,3 +1,5 @@
+export const accessToken = '813761d33c8d5efd0d5d50b57639eae6fe8a7a76bc1faf93793857f74d7d00af';
+
 export const user = {
     firstName: 'Poison',
     lastName: 'Ivy',

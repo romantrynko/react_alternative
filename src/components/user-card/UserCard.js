@@ -3,24 +3,21 @@ import './UserCard.scss';
 
 export default function UserCard(props) {
 
-    const { post } = props;
-    const { title, body } = post;
+	const { user } = props;
 
-    const kittyUrl = `https://cataas.com/cat/says/hello%20world!?${Math.random() * 1000}`;
+	if (!user) return null;
 
-    return (
-        <div className="may-user-card card">
-            <img src={kittyUrl} alt="kitty" />
+	const { first_name, last_name, email, address } = user;
 
-
-            <div className="card-body">
-                <h4 className="card-title">{title}</h4>
-                <p className="card-text">
-                    {body}
-                </p>
-                <a href="kittyUrl" className="btn btn-primary">Change photos</a>
-            </div>
-        </div>
-    )
+	return (
+		<div className="may-user-card card">
+			<div className="card-body">
+				<h4 className="card-title">{first_name} {last_name}</h4>
+				<div className="card-text">
+					<div>{email}</div>
+					<div>{address}</div>
+				</div>
+			</div>
+		</div>
+	)
 }
-
