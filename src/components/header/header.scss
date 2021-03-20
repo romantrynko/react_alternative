@@ -10,6 +10,12 @@
         height: 60px;
     }
 
+    .active {
+        text-decoration: underline;
+        color: darkgreen;
+        font-weight: 500;
+    }
+
     &-link-wrapper {
         display: flex;
 

@@ -6,16 +6,24 @@ export const user = {
     avatar: 'https://www.iconeasy.com/icon/png/Movie%20%26%20TV/The%20Batman%20Vol.%202/Poison%20Ivy.png',
 };
 
-export const links = [{
-    name: 'Home',
-    url: '#'
-}, {
-    name: 'Users',
-    url: '#'
-}, {
-    name: 'Posts',
-    url: '#'
-}];
+export const links = [
+    {
+        name: 'Home',
+        url: '/home'
+    },
+    {
+        name: 'Users',
+        url: '/users'
+    },
+    {
+        name: 'Posts',
+        url: '/posts'
+    },
+    {
+        name: 'Post Preview',
+        url: '/post-preview'
+    }
+];
 
 export const socialMediaIcons = [{
     src: 'https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-256.png',

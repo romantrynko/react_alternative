@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import Header from '../header/Header';
-import Panel from '../panel/Panel';
-import PostPreview from '../../post-preview/PostPreview';
-import { DropDown } from '../drop-down/DropDown';
-import { Footer } from '../footer/Footer';
 import { allComments, postsList, usersList } from '../../constants';
-import Card from '../user-card/UserCard';
-
-import './App.scss';
-import PostForm from '../post-form/PostForm';
-import { UsersList } from '../users-list/UsersList';
+import { DropDown } from '../drop-down/DropDown';
 import AddUserForm from '../user-form/AddUserForm';
-import Test from '../post-card/Test';
+import Card from '../user-card/UserCard';
+import PostForm from '../post-form/PostForm';
+import PostPreview from '../../post-preview/PostPreview';
+import Panel from '../panel/Panel';
+
+import './HomePage.scss';
+
+
 
 const sortingOptions = ['Sort By Default', 'Sort By Author'];
 
-export default class App extends Component {
+export default class HomePage extends Component {
 
   state = {
     posts: [...postsList],
@@ -89,13 +87,8 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <Header>
-        </Header>
-        
-        <Test />
-        <Panel label="Users" isOpenByDefault>
+        <Panel label="Users">
           <AddUserForm />
-          <UsersList users={users} />
         </Panel>
 
         <Panel label="Post Preview" >
@@ -137,7 +130,6 @@ export default class App extends Component {
             }
           </div>
         </Panel>
-        <Footer />
       </div>
     );
   }
