@@ -7,10 +7,9 @@ export function UsersList(props) {
 		<div className="d-flex">
 			{
 				users.map((user, index) => {
-					const fullName = `${user.first_name} ${user.last_name}`
 					return (
 						<UserCard
-							user={fullName}
+							user={user}
 							key={user.id}
 						/>
 					)

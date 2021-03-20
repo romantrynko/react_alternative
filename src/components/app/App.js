@@ -10,6 +10,8 @@ import Card from '../user-card/UserCard';
 import './App.scss';
 import PostForm from '../post-form/PostForm';
 import { UsersList } from '../users-list/UsersList';
+import AddUserForm from '../user-form/AddUserForm';
+import Test from '../post-card/Test';
 
 const sortingOptions = ['Sort By Default', 'Sort By Author'];
 
@@ -87,9 +89,12 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <Header />
-
-        <Panel label="Users" >
+        <Header>
+        </Header>
+        
+        <Test />
+        <Panel label="Users" isOpenByDefault>
+          <AddUserForm />
           <UsersList users={users} />
         </Panel>
 

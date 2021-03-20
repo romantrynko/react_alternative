@@ -8,16 +8,33 @@ class PostForm extends Component {
     };
 
     onTitleChange = (event) => {
-        const title = event.target.value
+        const title = event.target.value;
+        
+
+        if (/\d+/.test(title)) {
+            this.setState({
+                warning: 'no numbers allowed'
+            });
+            return
+        }
         this.setState({
-            title
+            title,
+            warning: ''
         })
     }
 
     onBodyChange = (event) => {
-        const body = event.target.value
+        const body = event.target.value;
+
+        if (/\d+/.test(body)) {
+            this.setState({
+                warning: 'no numbers allowed'
+            });
+            return
+        }
         this.setState({
-            body
+            body,
+            warning: ''
         })
     }
 
@@ -38,7 +55,7 @@ class PostForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        
+
         const { onAddPost } = this.props;
         const { title, body, user_id } = this.state
         const newPost = {
@@ -71,11 +88,14 @@ class PostForm extends Component {
     }
 
     render() {
-        const { title, body, user_id } = this.state;
+        const { title, body, warning } = this.state;
         return (
             <form className="may-add-post-form" onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label for="formGroupExampleInput">Example label</label>
+                    <label for="formGroupExampleInput">Text</label>
+                    {
+                        !!warning && <div className="text-monospace">{warning}</div>
+                    }
                     <input
                         type="text"
                         className="form-control"
@@ -86,7 +106,10 @@ class PostForm extends Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label for="formGroupExampleInput">Example label</label>
+                    <label for="formGroupExampleInput">Text</label>
+                    {
+                        !!warning && <div className="text-monospace">{warning}</div>
+                    }
                     <textarea
                         className="form-control"
                         id="formGroupExampleInput"
