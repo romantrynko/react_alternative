@@ -29,6 +29,10 @@ class AddUserForm extends Component {
         }
     }
 
+    focusInput = () => {
+        this.lastNameRef.current.focus();
+    }
+
     render() {
         const { warning } = this.state;
 
@@ -69,6 +73,7 @@ class AddUserForm extends Component {
                 </div>
                 
                 <button type='submit' className="btn btn-primary m-2">Add</button>
+                <button type='submit' onClick={this.focusInput} className="btn btn-primary m-2">Focus</button>
             </form>
         );
     }
