@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { allComments, postsList, usersList } from '../../constants';
 import { DropDown } from '../drop-down/DropDown';
 import AddUserForm from '../user-form/AddUserForm';
-import Card from '../user-card/UserCard';
+import { UserCard } from '../user-card/UserCard';
 import PostForm from '../post-form/PostForm';
 import PostPreview from '../../post-preview/PostPreview';
 import Panel from '../panel/Panel';
@@ -98,8 +98,8 @@ export default class HomePage extends Component {
         <Panel label="Posts">
           <div className="d-flex">
             Sorting:
-        <button onClick={this.onSortByAuthorClick} className="btn btn-primary">By author</button>
-            <button onClick={this.onSortByDefault} className="btn btn-primary">By default</button>
+            <button onClick={this.onSortByAuthorClick} className="btn btn-primary m-1">By author</button>
+            <button onClick={this.onSortByDefault} className="btn btn-primary m-1">By default</button>
 
             <DropDown
               onSelect={this.onSort}
@@ -118,7 +118,7 @@ export default class HomePage extends Component {
                 const comments = allComments.filter(comment => comment.post_id === item.id);
 
                 return (
-                  <Card
+                  <UserCard
                     post={item}
                     key={item.id}
                     hasImage={index % 2 !== 0}

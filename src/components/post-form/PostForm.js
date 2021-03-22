@@ -74,7 +74,7 @@ class PostForm extends Component {
         const selectedUser = users.find(item => item.id === user_id);
         const selectedFullName = `${selectedUser.first_name} ${selectedUser.last_name}`
         return (
-            <select value={selectedFullName} onChange={this.onUserSelect} >
+            <select value={selectedFullName} onChange={this.onUserSelect} className="form-select form-select-lg mb-3" >
                 {
                     users.map(user => {
                         const fullName = `${user.first_name} ${user.last_name}`
@@ -123,7 +123,7 @@ class PostForm extends Component {
                     this.renderUsersSelect()
                 }
 
-                <button type="submit" className="btn btn-primary">Add post</button>
+                <button type="submit" className="btn btn-primary m-1">Add post</button>
             </form>
         );
     }

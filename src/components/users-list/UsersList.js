@@ -1,10 +1,24 @@
 import React from 'react';
-import UserCard from '../user-card/UserCard';
+import queryString from 'query-string';
+import { UserCard } from '../user-card/UserCard';
 import { usersList } from '../../constants'
+import { withRouter } from 'react-router';
 
-export class UsersListPage extends React.Component {
+class UsersListPageComponent extends React.Component {
 	state = {
 		users: usersList
+	}
+
+	constructor(props) {
+		super(props);
+
+		const { location: { search } } = props;
+		const { page } = queryString.parse(search)
+
+		this.state = {
+			users: usersList,
+			page: page || 1
+		}
 	}
 
 	render() {
@@ -27,3 +41,5 @@ export class UsersListPage extends React.Component {
 	}
 
 }
+
+export const UsersListPage = withRouter(UsersListPageComponent);
