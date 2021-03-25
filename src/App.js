@@ -6,6 +6,7 @@ import {
   Link,
   Redirect
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import { Footer } from './components/footer/Footer';
 import Header from './components/header/Header';
@@ -15,43 +16,59 @@ import { UsersListPage } from './components/users-list/UsersList';
 import PostPreview from './post-preview/PostPreview';
 import { postsList, usersList } from './constants';
 import { UserCard } from './components/user-card/UserCard';
-
+import { appStore } from './store';
+import PostsList from './components/posts-list/PostsList';
+import PostDetailPage from './components/post-detail/PostDetailPage';
+import ToDoPage from './components/todo-page/ToDoPage';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
+      <Provider store={appStore}>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/" exact>
+              <HomePage />
+            </Route>
 
-          <Route path="/home" exact>
-            <HomePage />
-          </Route>
+            <Route path="/todos" component={ToDoPage} exact/>
 
-          <Route path="/users" component={UsersListPage} exact />
-          <Route path="/users/:userId" render={(routerProps) => {
-            return (<UserPage {...routerProps} />)
-          }} exact />
+            <Route path="/home" exact>
+              <HomePage />
+            </Route>
 
-          <Route path="/post-preview" render={(routerProps) => {
-            return (
-              <PostPreview posts={postsList} {...routerProps} />
-            )
-          }} exact />
+            <Route path="/users" component={UsersListPage} exact />
 
-          <Redirect from="/" to="/home" />
-          <Redirect from="*" to="/home" />
+            <Route path="/users/:userId" render={(routerProps) => {
+              return (<UserPage {...routerProps} />)
+            }} exact />
 
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
+            <Route path="/posts" component={PostsList} exact />
 
-        </Switch>
-        <Footer />
-      </Router>
+            <Route path="/posts/:id" render={(routerProps) => {
+              return (<UserPage {...routerProps} />)
+            }} exact />
+
+            <Route path="/post-preview" 
+            render={(routerProps) => {
+              return (
+                <PostDetailPage {...routerProps} />
+              )
+            }} exact />
+
+            <Redirect from="/" to="/home" />
+
+            <Redirect from="*" to="/home" />
+
+            <Route path="*">
+              <NotFoundPage />
+            </Route>
+
+          </Switch>
+          <Footer />
+        </Router>
+      </Provider>
     );
   }
 }

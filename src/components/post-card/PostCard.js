@@ -34,10 +34,11 @@ export class PostCard extends PureComponent {
         if (response.ok) {
             let result = await response.json();
 
+            const {comments} = result;
             
-            if (!!result.length) {
+            if (Array.isArray(comments)) {
                 this.setState({
-                    comments: result
+                    comments
                 });
             }
         } else {

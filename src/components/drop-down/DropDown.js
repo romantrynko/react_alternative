@@ -3,51 +3,53 @@ import React, { Component } from 'react';
 import './DropDown.scss';
 
 export class DropDown extends Component {
-    state = {
-        isOpen: false
-    };
+  state = {
+    isOpen: false
+  };
 
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    };
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  };
 
-    onOptionSelect = (event) => {
-        const { onSelect } = this.props;
+  onOptionSelect = (event) => {
+    const { onSelect } = this.props;
 
-        let value = event.target.getAttribute('data-value');
-        console.log(value);
+    const value = event.target.getAttribute('data-value');
 
-        onSelect(value);
+    onSelect && onSelect(value);
 
-        this.setState({ isOpen: false });
-    };
+    this.setState({ isOpen: false });
+  };
 
-    render() {
-        const { options = [], selectedOption } = this.props;
+  render() {
+    const { options, selectedOption } = this.props;
+    const { isOpen } = this.state;
 
-        const { isOpen } = this.state;
+    return (
+      <div className="may-drop-down dropdown">
+        <div className="dropdown-toggle" onClick={this.toggle}>{selectedOption}</div>
 
-        return (
-            <div className="may-drop-down dropdown">
-                <div className="dropdown-toggle" onClick={this.toggle}>{selectedOption}</div>
+        {
+          isOpen && <div className="may-drop-down-options-wrapper dropdown-menu show">
+            {
+              options.map(option => {
+                return (
+                  <div
+                    key={option}
+                    value={option}
+                    onClick={this.onOptionSelect}
+                  >
+                    {option}
+                  </div>
+                )
+              })
 
-                {
-                    !!isOpen && <div className="may-drop-down-options-wrapper dropdown-menu show">
-                        {
-                            options.map(option => {
-                                return (
-                                    <div key={option} data-value={option} onClick={this.onOptionSelect} className='may-drop-down-options-wrapper-option dropdown-item'>
-                                        {option}
-                                    </div>
-                                )
-                            })
-
-                        }
-                    </div>
-                }
-            </div>
-        );
-    }
+            }
+          </div>
+        }
+      </div>
+    );
+  }
 }

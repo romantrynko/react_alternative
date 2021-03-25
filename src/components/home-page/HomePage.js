@@ -6,14 +6,15 @@ import { UserCard } from '../user-card/UserCard';
 import PostForm from '../post-form/PostForm';
 import PostPreview from '../../post-preview/PostPreview';
 import Panel from '../panel/Panel';
+import { appStore } from '../../store';
+import { connect } from 'react-redux';
 
 import './HomePage.scss';
-
-
+import { dec, inc } from '../../actions';
 
 const sortingOptions = ['Sort By Default', 'Sort By Author'];
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 
   state = {
     posts: [...postsList],
@@ -82,11 +83,26 @@ export default class HomePage extends Component {
     })
   }
 
+  onInc = () => {
+    const { increment } = this.props;
+    increment()
+  }
+
+  onDec = () => {
+    const { decrement } = this.props;
+    decrement()
+  }
+
   render() {
     const { posts, selectedOption, users } = this.state;
+    const { count } = this.props;
 
     return (
       <div className="App">
+        <div>Count: {count}</div>
+        <button type="button" className="btn btn-primary m-1" onClick={this.onInc}>Increment</button>
+        <button type="button" className="btn btn-primary m-1" onClick={this.onDec}>Decrement</button>
+
         <Panel label="Users">
           <AddUserForm />
         </Panel>
@@ -134,3 +150,19 @@ export default class HomePage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const { count } = state;
+  return {
+    count
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increment: () => dispatch(inc()),
+    decrement: () => dispatch(dec())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
