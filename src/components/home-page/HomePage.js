@@ -152,9 +152,11 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => {
-  const { count } = state;
+  const { counter: { count, property_1, a } } = state;
   return {
-    count
+    count,
+    property_1,
+    a
   }
 };
 

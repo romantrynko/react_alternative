@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { accessToken } from '../../constants';
 import { DropDown } from '../drop-down/DropDown';
-import uniqId from 'uniqId';
+import { uniqId } from 'generate-unique-id';
+import { addTodo, removeTodo } from '../../actions';
+import { connect } from 'react-redux';
 
 class ToDoPage extends Component {
   state = {
@@ -66,14 +68,15 @@ class ToDoPage extends Component {
 
   addTodo = () => {
     const { user, title, body, doneStatus } = this.state;
+    const { addTodo } = this.props;
     const newTodo = {
       id: uniqId(),
       user,
       title,
       body,
       doneStatus
-    }
-
+    };
+    addTodo && addTodo(newTodo);
   }
 
   render() {
@@ -81,21 +84,35 @@ class ToDoPage extends Component {
     return (
       <div>
         Add todo form
-        <form className="d-flex flex-column">
+        <form className="d-flex flex-column m-2 w-50">
           <input className="m-2" value={title} onChange={this.onTitleChange} />
           <textarea className="m-2" value={body} onChange={this.onBodyChange} />
 
-          <DropDown className="m-2" options={users} selectedOption={user} onSelect={this.onUserSelect} />
+          <DropDown options={users} selectedOption={user} onSelect={this.onUserSelect} />
 
           <div>
-            <input type="checkbox" onChange={this.onStatusChange} checked={doneStatus} />
+            <input className="m-1" type="checkbox" onChange={this.onStatusChange} checked={doneStatus} />
             <span className="m-1"></span>
           </div>
-          <button className="btn btn-primary" onClick={this.addTodo}>Add todo</button>
+          <button className="btn btn-primary m-2 w-50" onClick={this.addTodo}>Add todo</button>
         </form>
       </div>
     );
   }
 };
 
-export default ToDoPage;
+const mapStateToProps = (store) => {
+  const { todoReducer: { todos } } = store;
+  return {
+    todos
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (todo) => dispatch(addTodo(todo)),
+    removeTodo: (todo) => dispatch(removeTodo(todo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoPage);
