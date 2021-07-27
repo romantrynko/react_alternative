@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserInfo.scss';
 
 export const UserInfo = (props) => {
-  const { user } = props;
+  const { user = {} } = props;
+
   if (!user) return null;
 
-  const { avatar, firstName, lastName } = user
+  const { avatar, firstName, lastName } = user;
 
   return (
     <div className='user-info'>

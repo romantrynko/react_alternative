@@ -12,7 +12,7 @@ export function Footer(props) {
         <div className="may-footer-social-media-wrapper">
           {socialMediaIcons.map((item, index) => {
             return (
-              <img className="may-footer-social-media-icon" src={item.src} alt={item.alt} />
+              <img className="may-footer-social-media-icon" src={item.src} alt={item.alt} key={index}/>
             )
           }
           )}
