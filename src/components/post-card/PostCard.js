@@ -1,9 +1,10 @@
 import React from 'react';
 import './PostCard.scss';
 import DefaultImg from '../../assets/empty.png';
+import { Comment } from '../comment/Comment';
 
 export function PostCard(props) {
-  const { post, hasImage } = props;
+  const { post, hasImage, author, comments } = props;
   const { title, body } = post;
 
   const kittyUrl = `https://cataas.com/cat/says/hello%20world!?${Math.random() * 1000}`;
@@ -33,7 +34,23 @@ export function PostCard(props) {
         <div className="card-text body">
           {body}
         </div>
+        <footer className='blockquote-footer'>
+          {author}
+          <div>
+            {
+              !!comments.length && <label>Comment:</label>
+            }
+            {
+              !!comments && comments.map(comment => {
+                return (
+                  <Comment comment={comment} key={comment.id} />
+                )
+              })
+            }
+          </div>
+        </footer>
       </div>
+
     </div>
   )
 }

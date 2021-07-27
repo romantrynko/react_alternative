@@ -16,7 +16,6 @@ export function Footer(props) {
             )
           }
           )}
-
         </div>
       </div>
       <div>All rights reserved. may-app © 2020</div>
