@@ -1,17 +1,19 @@
 .may-user-card {
-    max-width: 250px;
-    margin: 10px;
-    max-height: 250;
+  max-width: 300px;
+  margin   : 10px 20px;
+  padding  : 10px;
 
-    .title {
-        font-size: 16px;
-    }
+  &-avatar {
+    width : 75px;
+    height: 75px;
+    margin: 0 auto;
+  }
 
-    .body {
-        display: block;
-        max-width: 98%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  .card-text {
+    font-size: 14px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
 }
