@@ -9,12 +9,36 @@ import './App.css';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PanelFromLecture from '../panel/PanelFromLecture';
+import Dropdown from '../dropdown/Dropdown';
+
+const sortingOption = ['Sort by default', 'Sort by author'];
 
 class App extends Component {
 
   state = {
-    posts: [...postsList]
+    posts: [...postsList],
+    selectedOption: sortingOption[0]
   };
+
+  onSort = (selectedOption) => {
+    const [option1, option2] = sortingOption;
+
+    switch (selectedOption) {
+      case option1:
+        this.onSortByDefault();
+        this.setState({
+          selectedOption: option1
+        });
+        break;
+      case option2:
+        this.onSortByAuthor();
+        this.setState({
+          selectedOption: option2
+        });
+        break;
+      default: break;
+    }
+  }
 
   onSortByAuthor = () => {
     const res = [...this.state.posts];
@@ -45,7 +69,7 @@ class App extends Component {
   };
 
   render() {
-    const { posts } = this.state
+    const { posts, selectedOption } = this.state;
 
     return (
       <div className='App'>
@@ -75,6 +99,12 @@ class App extends Component {
               onClick={this.onSortByDefault}
             >By default</button>
           </div>
+
+          <Dropdown
+            onSelect={this.onSort}
+            selectedOption={selectedOption}
+            options={sortingOption}
+          />
 
           <div className='d-flex posts-container'>
             {
