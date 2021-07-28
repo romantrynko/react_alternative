@@ -5,11 +5,13 @@ import { Footer } from './../footer/Footer';
 import { UserCard } from '../user-card/UserCard';
 import { PostCard } from '../post-card/PostCard';
 
+
 import './App.css';
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
+import PostPreview from '../post-preview/PostPreview';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
@@ -85,6 +87,10 @@ class App extends Component {
               })
             }
           </div>
+        </PanelFromLecture>
+
+        <PanelFromLecture label='Post Preview'>
+          <PostPreview posts={posts}/>
         </PanelFromLecture>
 
         <PanelFromLecture label='Posts'>

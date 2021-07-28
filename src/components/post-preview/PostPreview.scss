@@ -1,0 +1,25 @@
+.may-post-preview {
+  display: flex;
+
+  &-content {
+    width: 50%;
+  }
+
+  &-card {
+    max-width    : unset;
+    flex     : 1
+  }
+
+  &-list {
+    width: 50%;
+    flex : 1
+  }
+}
+
+.may-posts-menu {
+
+  &-option {
+    border: 1px solid gray;
+    margin: 10px;
+  }
+}
