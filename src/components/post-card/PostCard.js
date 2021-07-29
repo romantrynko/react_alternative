@@ -1,16 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './PostCard.scss';
 import DefaultImg from '../../assets/empty.png';
 import { Comment } from '../comment/Comment';
 import { accessToken } from '../../constants';
 
 export class PostCard extends PureComponent {
-
-  constructor(props) {
-    super(props);
-  }
-
-
   state = {
     comments: [],
     isCommentsLoading: false,

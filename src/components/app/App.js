@@ -4,6 +4,7 @@ import { usersList, postsList, allComments } from '../../constants';
 import { Footer } from './../footer/Footer';
 import { UserCard } from '../user-card/UserCard';
 import { PostCard } from '../post-card/PostCard';
+import uniqueId from 'uniqid';
 
 
 import './App.css';
@@ -12,6 +13,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
 import PostPreview from '../post-preview/PostPreview';
+import PostForm from './../post-form/PostForm';
+import UsersList from './../users-list/UsersList';
+import AddUserForm from '../user-form/AddUserForm';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
@@ -19,7 +23,8 @@ class App extends Component {
 
   state = {
     posts: [...postsList],
-    selectedOption: sortingOption[0]
+    selectedOption: sortingOption[0],
+    users: usersList
   };
 
   onSort = (selectedOption) => {
@@ -70,41 +75,38 @@ class App extends Component {
     })
   };
 
+  addPost = (newPost) => {
+    this.setState((prevState) => {
+      return {
+        posts: [{
+          ...newPost,
+          id: uniqueId(),
+        }, ...prevState.posts]
+      }
+    })
+  }
+
   render() {
-    const { posts, selectedOption } = this.state;
+    const { posts, selectedOption, users } = this.state;
 
     return (
       <div className='App'>
         <Header />
 
-        <PanelFromLecture label='Users'>
-          <div className='d-flex posts-container'>
-            {
-              usersList.map(item => {
-                return (
-                  <UserCard user={item} key={item.id} />
-                )
-              })
-            }
-          </div>
+
+
+        <PanelFromLecture label='Users' isOpenByDefault>
+          <AddUserForm />
+          <UsersList users={users} />
         </PanelFromLecture>
 
         <PanelFromLecture label='Post Preview'>
-          <PostPreview posts={posts}/>
+          <PostPreview posts={posts} />
         </PanelFromLecture>
 
         <PanelFromLecture label='Posts'>
-          <div className='d-flex'>
-            <b>Sorting:</b>
-            <button
-              className='btn btn-primary m-1'
-              onClick={this.onSortByAuthor}
-            >By author</button>
-            <button
-              className='btn btn-primary m-1'
-              onClick={this.onSortByDefault}
-            >By default</button>
-          </div>
+
+          <PostForm onAddPost={this.addPost} users={users} />
 
           <Dropdown
             onSelect={this.onSort}

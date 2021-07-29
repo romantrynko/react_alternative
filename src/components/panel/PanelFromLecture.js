@@ -18,20 +18,12 @@ class PanelFromLecture extends Component {
     })
   };
 
-  onChange = (event) => {
-    this.setState({
-      placeholder: event.target.value
-    })
-  };
-
   render() {
     const { children, label } = this.props;
     const { isOpen } = this.state;
 
     return (
       <div className='may-panel card'>
-
-        <input placeholder={this.state.placeholder} onChange={this.onChange}/>
 
         <div className='may-panel-header card-header'>
           <div>{label}</div>

@@ -44,7 +44,7 @@ class PostPreview extends Component {
 
   render() {
     const { selectedPost } = this.state;
-    const { posts, comments } = this.props;
+    const { posts } = this.props;
 
     const post = posts.find(item => item.id === selectedPost);
 
