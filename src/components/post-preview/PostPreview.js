@@ -17,15 +17,15 @@ class PostPreview extends Component {
     }
   };
 
-  componentDidMount() {
-    console.log('componentDidMount');
-    // document.addEventListener('click', this.showMessage())
-  };
+  // componentDidMount() {
+  //   console.log('componentDidMount');
+  //   document.addEventListener('click', this.showMessage())
+  // };
 
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-    // document.removeEventListener('click', this.showMessage())
-  };
+  // componentWillUnmount() {
+  //   console.log('componentWillUnmount');
+  //   document.removeEventListener('click', this.showMessage())
+  // };
 
   // componentDidUpdate(prevProps, prevState) {
   //   console.log('Post preview did update', this.state.selectedPost, prevState.selectedPost);
@@ -44,7 +44,7 @@ class PostPreview extends Component {
 
   render() {
     const { selectedPost } = this.state;
-    const { posts } = this.props;
+    const { posts, comments } = this.props;
 
     const post = posts.find(item => item.id === selectedPost);
 

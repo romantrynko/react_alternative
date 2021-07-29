@@ -6,6 +6,11 @@ import { accessToken } from '../../constants';
 
 export class PostCard extends PureComponent {
 
+  constructor(props) {
+    super(props);
+  }
+
+
   state = {
     comments: [],
     isCommentsLoading: false,
@@ -19,26 +24,30 @@ export class PostCard extends PureComponent {
 
     if (post) {
       const { id } = post;
-      id && this.loadComments();
+
+      id && this.loadComments(id);
     }
 
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('PostCard did update', prevProps.post, this.props.post);
     if (prevProps.post.id !== this.props.post.id) {
       this.loadComments(this.props.post.id)
     }
   };
 
   loadComments = async (postId) => {
+    this.setState({
+      isCommentsLoading: true,
+      showComments: true
+    })
+
     let response = await fetch(`https://gorest.co.in/public-api/comments?access-token=${accessToken}&post_id=${postId}`);
-    console.log(response);
 
     if (response.ok) {
       let json = await response.json();
 
-      const { result } = json;
+      const result = json.data;
 
       if (Array.isArray(result)) {
         this.setState({
@@ -58,7 +67,15 @@ export class PostCard extends PureComponent {
         })
       }
     }
-  }
+  };
+
+  onToggleComments = () => {
+    this.setState({
+      showComments: !this.state.showComments
+    })
+  };
+
+
   // shouldComponentUpdate(nextProps, nextState) {
   //   const { post: currentPost } = this.props;
   //   const { post: nextPost } = nextProps;
@@ -69,7 +86,7 @@ export class PostCard extends PureComponent {
   render() {
     const { post, hasImage, author = '', className = '' } = this.props;
     const { title, body } = post;
-    const { comments } = this.state;
+    const { comments, showComments, error, isCommentsLoading, commentsLoaded } = this.state;
 
     const kittyUrl = `https://cataas.com/cat/says/hello%20world!?${Math.random() * 1000}`;
 
@@ -100,19 +117,35 @@ export class PostCard extends PureComponent {
           </div>
           <footer className='blockquote-footer'>
             Author: {author}
-            <div>
-              {
-                !!comments.length && <label>Comment:</label>
-              }
-              {
-                !!comments && comments.map(comment => {
-                  return (
-                    <Comment comment={comment} key={comment.id} />
-                  )
-                })
-              }
-            </div>
           </footer>
+          {
+            <label
+              className='btn btn-link'
+              onClick={this.onToggleComments}
+            >{showComments ? 'Hide comments' : 'Show Comments'}</label>
+          }
+          <div>
+
+            {
+              !!error && <div>{error}</div>
+            }
+            {
+              showComments && <label>Comment:</label>
+            }
+            {
+              showComments && isCommentsLoading && <div>Loading comments ...</div>
+            }
+            {
+              showComments && !isCommentsLoading && commentsLoaded && !comments.length && <div>No comments for this post yet</div>
+            }
+            {
+              showComments && !isCommentsLoading && commentsLoaded && !!comments.length && comments.map(comment => {
+                return (
+                  <Comment comment={comment} key={comment.id} />
+                )
+              })
+            }
+          </div>
         </div>
       </div>
     )
