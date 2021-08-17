@@ -86,6 +86,28 @@ class App extends Component {
     })
   };
 
+  addUser = (newUser) => {
+    const {
+      first_name,
+      last_name,
+      email,
+      address
+    } = newUser;
+
+    if (first_name === '' || last_name === '' || email === '' || address === '') {
+      return;
+    };
+
+    this.setState((prevState) => {
+      return {
+        users: [{
+          ...newUser,
+          id: uniqueId(),
+        }, ...prevState.users]
+      }
+    })
+  };
+
   render() {
     const { posts, selectedOption, users } = this.state;
 
@@ -93,10 +115,8 @@ class App extends Component {
       <div className='App'>
         <Header />
 
-
-
         <PanelFromLecture label='Users' isOpenByDefault>
-          <AddUserForm />
+          <AddUserForm onUserAdd={this.addUser} users={users} />
           <UsersList users={users} />
         </PanelFromLecture>
 
@@ -137,6 +157,6 @@ class App extends Component {
       </div>
     )
   }
-}
+};
 
 export default App;

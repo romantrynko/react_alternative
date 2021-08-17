@@ -49,6 +49,13 @@ class PostForm extends Component {
     })
   };
 
+  onReset = () => {
+    this.setState({
+      title: '',
+      body: ''
+    })
+  };
+
   onSubmit = (event) => {
     event.preventDefault();
     const { onAddPost } = this.props;
@@ -59,7 +66,9 @@ class PostForm extends Component {
       user_id
     };
 
-    onAddPost && onAddPost(newPost)
+    onAddPost && onAddPost(newPost);
+
+    this.onReset();
   };
 
   renderUsersSelect = () => {
@@ -114,7 +123,8 @@ class PostForm extends Component {
         {
           this.renderUsersSelect()
         }
-        <button type="submit" className="btn btn-primary m-1">Add post</button>
+        <button type="submit" className="btn btn-primary m-2">Add post</button>
+        <button type="button" className="btn btn-success m-2" onClick={this.onReset}>Reset form</button>
       </form>
     );
   }

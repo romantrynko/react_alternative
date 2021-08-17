@@ -7,11 +7,11 @@ export function UserCard(props) {
 
   if (!user) return null;
 
-  const { first_name, last_name, email, address, _links: { avatar } } = user;
+  const { first_name, last_name, email, address, _links: { avatar } = {} } = user;
   return (
     <div className="may-user-card card">
 
-      <img src={avatar.href} alt="user avatar" className="may-user-card-avatar rounded-circle" />
+      {avatar && <img src={avatar.href} alt="user avatar" className="may-user-card-avatar rounded-circle" />}
 
       <div className="card-body">
         <h4 className="card-title">{first_name} {last_name}</h4>
