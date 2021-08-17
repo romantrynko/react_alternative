@@ -1,19 +1,26 @@
 import React from 'react'
 import { UserCard } from './../user-card/UserCard';
+import { usersList } from '../../constants';
 
-export default function UsersList(props) {
-  const { users } = props;
+export default class UsersList extends React.Component {
+  state = {
+    users: usersList
+  };
 
-  return (
-    <div className="d-flex">
-      {
-        users.map((user, index) => {
-          return <UserCard
-            user={user}
-            key={user.id}
-          />
-        })
-      }
-    </div>
-  )
+  render() {
+    const { users } = this.state;
+  
+    return (
+      <div className="d-flex">
+        {
+          users.map((user, index) => {
+            return <UserCard
+              user={user}
+              key={user.id}
+            />
+          })
+        }
+      </div>
+    )
+  }
 };

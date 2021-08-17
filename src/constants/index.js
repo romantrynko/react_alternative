@@ -8,14 +8,18 @@ export const user = {
 
 export const links = [{
   name: 'Home',
-  url: '#'
+  url: '/home'
 }, {
   name: 'Users',
-  url: '#'
+  url: '/users'
 }, {
   name: 'Posts',
-  url: '#'
-}];
+  url: '/posts'
+  }, {
+    name: 'Post Preview',
+    url: '/post-preview'
+  }
+];
 
 export const socialMediaIcons = [{
   src: 'https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-256.png',

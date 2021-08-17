@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './AddUserForm.scss';
+
 class AddUserForm extends Component {
 
   firstNameRef = React.createRef();
@@ -60,10 +62,10 @@ class AddUserForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className='form' onSubmit={this.onSubmit}>
         {!!this.state.warning && <div>{this.state.warning}</div>}
 
-        <label for="formGroupExampleInput">Add new user</label>
+        <label forHtml="formGroupExampleInput">Add new user</label>
         <div className="form-group m-2">
           <input
             ref={this.firstNameRef}

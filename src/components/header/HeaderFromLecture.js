@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { links, user } from '../../constants';
 import { UserInfo } from '../user-info/UserInfoFromLecture';
@@ -18,7 +19,13 @@ export const Header = (props) => {
           links.map((link, index) => {
             return (
               <div className='nav-item' key={index}>
-                <a href={link.url} className='may-header-links-wrapper-link'>{link.name}</a>
+                <NavLink
+                  to={link.url}
+                  className='may-header-links-wrapper-link'
+                  activeClassName='active'
+                >
+                  {link.name}
+                </NavLink>
               </div>
             )
           })

@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import { Header } from '../header/HeaderFromLecture'
+
 import { usersList, postsList, allComments } from '../../constants';
-import { Footer } from './../footer/Footer';
-import { UserCard } from '../user-card/UserCard';
 import { PostCard } from '../post-card/PostCard';
 import uniqueId from 'uniqid';
 
-
 import './App.css';
-import './App.scss';
+import './HomePage.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
 import PostPreview from '../post-preview/PostPreview';
-import PostForm from './../post-form/PostForm';
-import UsersList from './../users-list/UsersList';
+import PostForm from '../post-form/PostForm';
+import UsersList from '../users-list/UsersList';
 import AddUserForm from '../user-form/AddUserForm';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
-class App extends Component {
+class HomePage extends Component {
 
   state = {
     posts: [...postsList],
@@ -113,9 +110,8 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <Header />
-
-        <PanelFromLecture label='Users' isOpenByDefault>
+        
+        <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.addUser} users={users} />
           <UsersList users={users} />
         </PanelFromLecture>
@@ -153,10 +149,9 @@ class App extends Component {
           </div>
         </PanelFromLecture>
 
-        <Footer />
       </div>
     )
   }
 };
 
-export default App;
+export default HomePage;

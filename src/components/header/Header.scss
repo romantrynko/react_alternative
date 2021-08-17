@@ -10,6 +10,11 @@
     height: 60px;
   }
 
+  .active {
+    color: green;
+    font-weight: bold;
+  }
+
   &-links-wrapper {
     display: flex;
 
