@@ -84,7 +84,7 @@ class App extends Component {
         }, ...prevState.posts]
       }
     })
-  }
+  };
 
   render() {
     const { posts, selectedOption, users } = this.state;

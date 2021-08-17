@@ -6,8 +6,10 @@ class PanelFromLecture extends Component {
   constructor(props) {
     super(props);
 
+    const { isOpenByDefault} = props;
+
     this.state = {
-      isOpen: false,
+      isOpen: isOpenByDefault,
       placeholder: 'input your text here'
     }
   };

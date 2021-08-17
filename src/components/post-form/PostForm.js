@@ -6,7 +6,7 @@ class PostForm extends Component {
   state = {
     title: '',
     body: '',
-    user_id: this.props.users[1].id
+    user_id: this.props.users[0].id
   };
 
   onTitleChange = (event) => {
@@ -18,11 +18,20 @@ class PostForm extends Component {
   };
 
   onBodyChange = (event) => {
-    const body = event.target.value
+    const body = event.target.value;
+
+    if (/^\d+$/.test(body)) {
+      this.setState({
+        warning: 'Please don\'t type numbers'
+      });
+
+      return;
+    };
 
     this.setState({
-      body
-    })
+      body,
+      warning: ''
+    });
   };
 
   onUserSelect = (event) => {
@@ -75,10 +84,12 @@ class PostForm extends Component {
   };
 
   render() {
-    const { title, body } = this.state;
+    const { title, body, warning } = this.state;
 
     return (
       <form class="may-add-post-form" onSubmit={this.onSubmit}>
+        {!!warning && <div>{warning}</div>}
+
         <div class="form-group">
           <label for="formGroupExampleInput1">Title</label>
           <input
