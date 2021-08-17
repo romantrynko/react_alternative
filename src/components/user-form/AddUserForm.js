@@ -32,6 +32,14 @@ class AddUserForm extends Component {
     this.setState({
       warning: ''
     });
+
+    this.firstNameRef.current.value = '';
+    this.lastNameRef.current.value = '';
+
+  };
+
+  focusInput = () => {
+    this.lastNameRef.current.focus();
   };
 
   render() {
@@ -66,7 +74,8 @@ class AddUserForm extends Component {
             placeholder='Email'
           />
         </div>
-        <button type="submit" class="btn btn-primary">Add User</button>
+        <button type="submit" class="btn btn-primary m-1">Add User</button>
+        <button type="button" class="btn btn-primary m-1" onClick={this.focusInput}>Focus</button>
       </form>
     );
   }
