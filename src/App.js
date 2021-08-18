@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HomePage from './components/home-page/HomePage';
-import UsersList from './components/users-list/UsersList';
+import { UsersList } from './components/users-list/UsersList';
 import { Header } from './components/header/HeaderFromLecture';
 import { Footer } from './components/footer/Footer';
 import PostPreview from './components/post-preview/PostPreview';
@@ -13,7 +13,8 @@ import { usersList } from './constants/index';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 
 
@@ -23,9 +24,7 @@ class App extends Component {
       <Router>
         <Header />
         <Switch>
-          <Route path='/' exact>
-            <HomePage />
-          </Route>
+        
 
           <Route path='/home' exact>
             <HomePage />
@@ -33,7 +32,7 @@ class App extends Component {
 
           <Route path='/users' component={UsersList} exact />
 
-          <Route path='/users/:id' render={(routerProps) => {
+          <Route path='/users/:userId' render={(routerProps) => {
             return (
               <UserPage {...routerProps} />
             )
@@ -44,6 +43,13 @@ class App extends Component {
               <PostPreview posts={postsList} {...routerProps} />
             )
           }} />
+
+          <Redirect from='/' to='/home' />
+          <Redirect from='*' to='/home' />
+
+          <Route path='*'>
+            <NotFoundPage />
+          </Route>
 
         </Switch>
 
@@ -56,13 +62,41 @@ class App extends Component {
 export default App;
 
 const UserPage = (props) => {
-  const { match: { params: { id } } } = props;
+  const { match: { params: { userId } }, history } = props;
 
-  const user = usersList.find(item => item.id === id);
+  const user = usersList.find(item => item.id === userId);
+
+  const toUsersList = () => {
+    history.push('/users')
+  };
+
+  const toHomePage = () => {
+    history.push('/home')
+  };
 
   return (
     <div>
+      <button
+        type="button"
+        className="btn btn-primary m-2"
+        onClick={toUsersList}
+      >
+        Back to users list
+      </button>
+
+      <button
+        type="button"
+        className="btn btn-primary m-2"
+        onClick={toHomePage}
+      >
+        Home
+      </button>
+
       {!!user && <UserCard user={user} />}
     </div>
   )
+};
+
+const NotFoundPage = () => {
+  return <div>Page not found</div>
 };

@@ -11,7 +11,7 @@ import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
 import PostPreview from '../post-preview/PostPreview';
 import PostForm from '../post-form/PostForm';
-import UsersList from '../users-list/UsersList';
+import { UsersList } from '../users-list/UsersList';
 import AddUserForm from '../user-form/AddUserForm';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
@@ -110,7 +110,7 @@ class HomePage extends Component {
 
     return (
       <div className='App'>
-        
+
         <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.addUser} users={users} />
           <UsersList users={users} />

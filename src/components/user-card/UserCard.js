@@ -6,6 +6,7 @@ import './UserCard.scss'
 
 function UserCardComponent(props) {
   const { user, location: { pathname }, match: { url } } = props;
+  console.log(props);
 
   if (!user) return null;
 
@@ -23,7 +24,7 @@ function UserCardComponent(props) {
         </div>
       </div>
 
-      <Link to={`${url}/${user.id}`}>Show details</Link>
+      <Link className='btn btn-secondary m-2' to={`${url}/${user.id}`}>Show details</Link>
     </div>
   );
 };
