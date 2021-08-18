@@ -3,8 +3,9 @@ import './PostCard.scss';
 import DefaultImg from '../../assets/empty.png';
 import { Comment } from '../comment/Comment';
 import { accessToken } from '../../constants';
+import { Link, withRouter } from 'react-router-dom';
 
-export class PostCard extends PureComponent {
+class PostCardComponent extends PureComponent {
   state = {
     comments: [],
     isCommentsLoading: false,
@@ -78,7 +79,7 @@ export class PostCard extends PureComponent {
   // };
 
   render() {
-    const { post, hasImage, author = '', className = '' } = this.props;
+    const { post, hasImage, author = '', className = '', match: { url } } = this.props;
     const { title, body } = post;
     const { comments, showComments, error, isCommentsLoading, commentsLoaded } = this.state;
 
@@ -100,6 +101,7 @@ export class PostCard extends PureComponent {
 
     return (
       <div className={`may-post-card card ${className}`} >
+        
         {
           renderImage()
         }
@@ -109,12 +111,15 @@ export class PostCard extends PureComponent {
           <div className="card-text body">
             {body}
           </div>
+          {
+            <Link className='btn btn-primary m-2' to={`${url}/${post.id}`}>Show details</Link>
+          }
           <footer className='blockquote-footer'>
             Author: {author}
           </footer>
           {
             <label
-              className='btn btn-link'
+              className='btn btn-primary m-2'
               onClick={this.onToggleComments}
             >{showComments ? 'Hide comments' : 'Show Comments'}</label>
           }
@@ -123,6 +128,7 @@ export class PostCard extends PureComponent {
             {
               !!error && <div>{error}</div>
             }
+
             {
               showComments && <label>Comment:</label>
             }
@@ -147,3 +153,4 @@ export class PostCard extends PureComponent {
   }
 }
 
+export const PostCard = withRouter(PostCardComponent);
