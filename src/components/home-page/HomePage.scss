@@ -2,9 +2,14 @@ $breakpoint-tablet: 600px;
 
 .posts-container {
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap     : wrap;
 
   @media(min-width: $breakpoint-tablet) {
     flex-direction: row;
   }
+
+}
+
+.color {
+  background-color: z;
 }

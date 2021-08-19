@@ -14,6 +14,10 @@ import PostForm from '../post-form/PostForm';
 import { UsersList } from '../users-list/UsersList';
 import AddUserForm from '../user-form/AddUserForm';
 
+import { appStore } from '../../store';
+import { inc, dec } from '../../actions';
+// import { DECREMENT } from '../../action-types';
+
 const sortingOption = ['Sort by default', 'Sort by author'];
 
 class HomePage extends Component {
@@ -105,11 +109,21 @@ class HomePage extends Component {
     })
   };
 
+  onInc = () => {
+    appStore.dispatch(inc());
+  };
+
+  onDec = () => {
+    appStore.dispatch(dec());
+  };
+
   render() {
-    const { posts, selectedOption, users } = this.state;
+    const { posts, selectedOption, users, btnColor } = this.state;
 
     return (
       <div className='App'>
+        <button type="button" className="btn btn-secondary m-2" onClick={this.onInc}>Increment</button>
+        <button type="button" className="btn btn-secondary m-2" onClick={this.onDec}>Decrement</button>
 
         <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.addUser} users={users} />
