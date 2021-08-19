@@ -1,6 +1,7 @@
 const defaultData = {
   count: 0,
-  property: 'test'
+  property: 'test',
+  a: {}
 }
 
 export function counter(store = defaultData, action) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { usersList, postsList, allComments } from '../../constants';
 import { PostCard } from '../post-card/PostCard';
@@ -14,7 +15,7 @@ import PostForm from '../post-form/PostForm';
 import { UsersList } from '../users-list/UsersList';
 import AddUserForm from '../user-form/AddUserForm';
 
-import { appStore } from '../../store';
+
 import { inc, dec } from '../../actions';
 // import { DECREMENT } from '../../action-types';
 
@@ -110,20 +111,24 @@ class HomePage extends Component {
   };
 
   onInc = () => {
-    appStore.dispatch(inc());
+    const { increment } = this.props;
+    increment()
   };
 
   onDec = () => {
-    appStore.dispatch(dec());
+    const { decrement } = this.props;
+    decrement()
   };
 
   render() {
-    const { posts, selectedOption, users, btnColor } = this.state;
+    const { posts, selectedOption, users } = this.state;
+    const { count } = this.props;
 
     return (
       <div className='App'>
         <button type="button" className="btn btn-secondary m-2" onClick={this.onInc}>Increment</button>
         <button type="button" className="btn btn-secondary m-2" onClick={this.onDec}>Decrement</button>
+        <div>{count}</div>
 
         <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.addUser} users={users} />
@@ -168,4 +173,24 @@ class HomePage extends Component {
   }
 };
 
-export default HomePage;
+const mapStateToProps = (state) => {
+  const { count, property, a } = state;
+  
+  return {
+    count,
+    property,
+    a
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: () => dispatch(inc()),
+    decrement: () => dispatch(dec())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
