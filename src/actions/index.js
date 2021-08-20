@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from '../action-types';
+import { ADD_TODO, DECREMENT, INCREMENT, REMOVE_TODO } from '../action-types';
 
 export const inc = () => {
   return {
@@ -11,5 +11,19 @@ export const dec = () => {
   return {
     type: DECREMENT,
     payload: 2
+  }
+};
+
+export const addTodo = (newTodo) => {
+  return {
+    type: ADD_TODO,
+    payload: newTodo
+  }
+};
+
+export const removeTodo = (todo) => {
+  return {
+    type: REMOVE_TODO,
+    payload: todo
   }
 };

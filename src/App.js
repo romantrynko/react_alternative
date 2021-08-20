@@ -10,8 +10,9 @@ import { PostDetailPage } from './components/post-detail-page/PostDetailPage';
 import { UsersList } from './components/users-list/UsersList';
 import { Header } from './components/header/HeaderFromLecture';
 import { Footer } from './components/footer/Footer';
-import { appStore } from './store';
+import TodoPage from './components/todo-page/TodoPage';
 
+import { appStore } from './store';
 import { Provider } from 'react-redux';
 
 import {
@@ -55,11 +56,14 @@ class App extends Component {
               )
             }} />
 
+            <Route path='/todos' component={TodoPage} exact/>
+
             <Redirect from='/' to='/home' />
 
             <Route path='*'>
               <NotFoundPage />
             </Route>
+          
 
           </Switch>
 

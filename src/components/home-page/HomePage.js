@@ -96,9 +96,6 @@ class HomePage extends Component {
       address
     } = newUser;
 
-    if (first_name === '' || last_name === '' || email === '' || address === '') {
-      return;
-    };
 
     this.setState((prevState) => {
       return {
@@ -174,8 +171,8 @@ class HomePage extends Component {
 };
 
 const mapStateToProps = (state) => {
-  const { count, property, a } = state;
-  
+  const { counter: { count, property, a } } = state;
+
   return {
     count,
     property,
