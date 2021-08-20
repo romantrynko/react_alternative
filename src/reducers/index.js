@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_TODO, REMOVE_TODO } from "../action-types";
+import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT } from "../action-types";
 
 const defaultData = {
   count: 0,
@@ -14,40 +14,39 @@ const todoDefaultStore = {
   todos: []
 };
 
-export function todoReducer(store = todoDefaultStore, action) {
+function todoReducer(store = todoDefaultStore, action) {
   switch (action.type) {
-    case ADD_TODO:
-      {
-        const newTodo = action.payload;
-        const { todos } = store;
+    case ADD_TODO: {
+      const newTodo = action.payload;
+      const { todos } = store;
+
+      return {
+        todos: [...todos, newTodo]
+      }
+    }
+
+    case REMOVE_TODO: {
+      const { id } = action.payload;
+      const { todos } = store;
+
+      const index = todos.findIndex(item => item.id === id);
+
+      if (index > -1) {
         return {
-          todos: [...todos, newTodo]
+          todos: [...todos].splice(index, 1)
         }
       }
 
-    case REMOVE_TODO:
-      {
-        const { id } = action.payload;
-        const { todos } = store;
-
-        const index = todos.findIndex(item => item.id === id);
-        if (index > -1) {
-          return {
-            todos: [...todos].splice(index, 1)
-          }
-        }
-
-        return store;
-      }
-
-    default:
       return store;
-  }
-}
+    }
 
-export function counter(store = defaultData, action) {
+    default: return store;
+  }
+};
+
+function counter(store = defaultData, action) {
   switch (action.type) {
-    case 'INCREMENT':
+    case INCREMENT:
       {
         return {
           ...store,
@@ -55,7 +54,7 @@ export function counter(store = defaultData, action) {
         };
       }
 
-    case 'DECREMENT':
+    case DECREMENT:
       {
         return {
           ...store,
@@ -67,7 +66,7 @@ export function counter(store = defaultData, action) {
   }
 };
 
-export const createRootReducers = () => {
+export const createRootReducer = () => {
   return combineReducers({
     counter,
     todoReducer

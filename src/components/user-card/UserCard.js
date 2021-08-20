@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import './UserCard.scss'
 
 function UserCardComponent(props) {
-  const { user, location: { pathname }, match: { url } } = props;
+  const { user, match: { url } } = props;
   console.log(props);
 
   if (!user) return null;

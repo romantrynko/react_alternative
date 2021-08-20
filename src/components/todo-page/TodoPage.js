@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import { accessToken } from '../../constants';
 import Dropdown from '../dropdown/Dropdown';
-import { uniqueId } from 'uniqid';
-import { ADD_TODO, REMOVE_TODO } from '../../action-types';
+import uniqueId from 'uniqid';
+import { addTodo, removeTodo } from '../../actions';
+
 
 class TodoPage extends Component {
   state = {
@@ -17,6 +18,7 @@ class TodoPage extends Component {
   componentDidMount() {
     this.loadUsers()
   };
+
 
   loadUsers = async () => {
     this.setState({
@@ -32,7 +34,6 @@ class TodoPage extends Component {
 
       if (Array.isArray(result)) {
         const usersNames = result.map(user => user.id);
-        console.log(result);
 
         this.setState({
           users: usersNames
@@ -69,6 +70,7 @@ class TodoPage extends Component {
 
   addTodo = () => {
     const { user, title, body, doneStatus } = this.state;
+    const { addTodo } = this.props;
 
     const newTodo = {
       id: uniqueId(),
@@ -76,7 +78,16 @@ class TodoPage extends Component {
       title,
       body,
       doneStatus
-    }
+    };
+
+    addTodo && addTodo(newTodo);
+
+    this.setState({
+      user: '',
+      title: '',
+      body: '',
+      doneStatus: false
+    });
   };
 
   render() {
@@ -86,7 +97,7 @@ class TodoPage extends Component {
         <h3 className='m-2'>
           Add todo form
         </h3>
-        <form className='d-flex flex-column m-2'>
+        <div className='d-flex flex-column m-2'>
           <input className='m-2' value={title} onChange={this.onTitleChange} />
           <textarea className='m-2' value={body} onChange={this.onBodyChange} />
 
@@ -99,7 +110,7 @@ class TodoPage extends Component {
             </span>
           </div>
           <button className='btn btn-primary' onClick={this.addTodo}>Add todo</button>
-        </form>
+        </div>
       </div>
     );
   };
@@ -107,17 +118,19 @@ class TodoPage extends Component {
 
 const mapStateToProps = (store) => {
   const { todoReducer: { todos } } = store;
-
   return {
     todos
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (todo) => dispatch(addTodo(todo)),
     removeTodo: (todo) => dispatch(removeTodo(todo))
   }
-}
+};
 
-export default TodoPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoPage);

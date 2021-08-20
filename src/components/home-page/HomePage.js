@@ -89,14 +89,6 @@ class HomePage extends Component {
   };
 
   addUser = (newUser) => {
-    const {
-      first_name,
-      last_name,
-      email,
-      address
-    } = newUser;
-
-
     this.setState((prevState) => {
       return {
         users: [{
