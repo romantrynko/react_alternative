@@ -33,7 +33,7 @@ class TodoPage extends Component {
       const result = json.data;
 
       if (Array.isArray(result)) {
-        const usersNames = result.map(user => user.id);
+        const usersNames = result.map(user => user.name);
 
         this.setState({
           users: usersNames
@@ -90,8 +90,17 @@ class TodoPage extends Component {
     });
   };
 
+  removeToDo = (todo) => {
+    const { removeTodo } = this.props;
+    return () => {
+      removeTodo && removeTodo(todo)
+    }
+  }
+
   render() {
     const { users, user, title, body, doneStatus } = this.state;
+    const { todos } = this.props;
+
     return (
       <div>
         <h3 className='m-2'>
@@ -111,6 +120,23 @@ class TodoPage extends Component {
           </div>
           <button className='btn btn-primary' onClick={this.addTodo}>Add todo</button>
         </div>
+
+
+        {
+          todos.map(todo => {
+            const { user, title, body, doneStatus, id } = todo;
+            return (
+              <div key={id} className='card card-body m-2'>
+                <div>User: {user}</div>
+                <div>Title: {title}</div>
+                <div>Body: {body}</div>
+                <div>Is done ? {doneStatus ? 'yes' : 'no'}</div >
+                <button className='btn btn-primary' onClick={this.removeToDo(todo)}>Remove</button>
+              </div>
+            )
+          })
+        }
+
       </div>
     );
   };
@@ -123,12 +149,18 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (todo) => dispatch(addTodo(todo)),
-    removeTodo: (todo) => dispatch(removeTodo(todo))
-  }
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addTodo: (todo) => dispatch(addTodo(todo)),
+//     removeTodo: (todo) => dispatch(removeTodo(todo))
+//   }
+// };
+
+
+const mapDispatchToProps = ({
+  addTodo,
+  removeTodo
+});
 
 export default connect(
   mapStateToProps,

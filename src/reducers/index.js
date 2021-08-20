@@ -30,12 +30,14 @@ function todoReducer(store = todoDefaultStore, action) {
       const { todos } = store;
 
       const index = todos.findIndex(item => item.id === id);
+      const arrCopy = [...todos];
+      arrCopy.splice(index, 1);
 
       if (index > -1) {
         return {
-          todos: [...todos].splice(index, 1)
+          todos: arrCopy
         }
-      }
+      };
 
       return store;
     }
