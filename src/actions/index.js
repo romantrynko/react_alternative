@@ -3,7 +3,8 @@ import {
   DECREMENT,
   INCREMENT,
   REMOVE_TODO,
-  UPDATE_TODO
+  UPDATE_TODO,
+  TOGGLE_TODO
 } from '../action-types';
 
 export const inc = () => {
@@ -38,5 +39,12 @@ export const updateTodo = (todo) => {
   return {
     type: UPDATE_TODO,
     payload: todo
+  }
+};
+
+export const toggleTodo = (id) => {
+  return {
+    type: TOGGLE_TODO,
+    payload: id
   }
 };

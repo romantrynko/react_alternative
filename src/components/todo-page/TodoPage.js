@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { accessToken } from '../../constants';
 import Dropdown from '../dropdown/Dropdown';
 import uniqueId from 'uniqid';
-import { addTodo, removeTodo, updateTodo } from '../../actions';
+import { addTodo, removeTodo, updateTodo, toggleTodo } from '../../actions';
+import TodoCard from './../todo-card/TodoCard';
 
 
 class TodoPage extends Component {
@@ -117,6 +118,12 @@ class TodoPage extends Component {
     this.resetForm()
   };
 
+  onToggleTodo = (id) => {
+    
+
+    toggleTodo && toggleTodo(id);
+  };
+
   resetForm = () => {
     this.setState({
       user: '',
@@ -134,12 +141,12 @@ class TodoPage extends Component {
 
     return (
       <div >
-        <h3 className='m-2 '>
+        <h3 className='card card-header'>
           Add todo form
         </h3>
-        <div className='d-flex flex-column m-2'>
-          <input className='m-2' value={title} onChange={this.onTitleChange} />
-          <textarea className='m-2' value={body} onChange={this.onBodyChange} />
+        <div className='d-flex flex-column card card-body m-2'>
+          <input className='m-2' value={title} onChange={this.onTitleChange} placeholder='Todo title' />
+          <textarea className='m-2' value={body} onChange={this.onBodyChange} placeholder='Todo body' />
 
           <Dropdown options={users} selectedOption={user} onSelect={this.onUserSelect} />
 
@@ -155,25 +162,19 @@ class TodoPage extends Component {
           </div>
         </div>
 
-
         {
           todos.map(todo => {
-            const { user, title, body, doneStatus, id } = todo;
             return (
-              <div key={id} className='card card-body m-2'>
-                <div>User: {user}</div>
-                <div>Title: {title}</div>
-                <div>Body: {body}</div>
-                <div>Done: {doneStatus ? 'yes' : 'no'}</div >
-                <div className='d-flex flex-row w-25'>
-                <button className='btn btn-secondary m-2' onClick={this.onEditTodo(todo)}>Edit</button>
-                  <button className='btn btn-danger m-2' onClick={this.onRemoveToDo(todo)}>Remove</button>
-                </div>
-              </div>
+              <TodoCard
+                todo={todo}
+                key={todo.id}
+                onRemoveToDo={this.onRemoveToDo(todo)}
+                onEditTodo={this.onEditTodo(todo)}
+                onToggleTodo={this.onToggleTodo(todo.id)}
+              />
             )
           })
         }
-
       </div>
     );
   };
@@ -197,7 +198,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = ({
   addTodo,
   removeTodo,
-  updateTodo
+  updateTodo,
+  toggleTodo
 });
 
 export default connect(

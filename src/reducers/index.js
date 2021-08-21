@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT, UPDATE_TODO } from "../action-types";
+import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT, UPDATE_TODO, TOGGLE_TODO } from "../action-types";
 
 const defaultData = {
   count: 0,
@@ -55,6 +55,23 @@ function todoReducer(store = todoDefaultStore, action) {
           todos: arrCopy
         }
       };
+      return store;
+    }
+
+    case TOGGLE_TODO: {
+      const id = action.payload;
+      const { todos } = store;
+      const arrCopy = [...todos];
+      const index = todos.findIndex(item => item.id === id);
+
+      if (index > -1) {
+        arrCopy[index].doneStatus = !arrCopy[index].doneStatus;
+
+        return {
+          todos: arrCopy
+        }
+      };
+      return store;
     }
 
     default: return store;

@@ -38,7 +38,7 @@ class Dropdown extends Component {
   };
 
   onClose = (event) => {
-    if (this.dropDownRef && !this.dropDownRef.contains(event.target)) {
+    if (this.dropDownRef && !this.dropDownRef.current.contains(event.target)) {
 
       this.setState({
         isOpen: false
@@ -52,7 +52,7 @@ class Dropdown extends Component {
 
     return (
       <div className='may-drop-down dropdown' ref={this.dropDownRef}>
-        <div className='dropdown-toggle' onClick={this.toggle}>{selectedOption}</div>
+        <div className='dropdown-toggle m-2' onClick={this.toggle} >User: {selectedOption}</div>
         {
           !!isOpen && <div className='may-drop-down-option-wrapper dropdown-menu show'>
             {

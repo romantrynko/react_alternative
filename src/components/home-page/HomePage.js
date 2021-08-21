@@ -115,9 +115,9 @@ class HomePage extends Component {
 
     return (
       <div className='App'>
+        <h2 className='card card-header'>Count: {count}</h2>
         <button type="button" className="btn btn-secondary m-2" onClick={this.onInc}>Increment</button>
         <button type="button" className="btn btn-secondary m-2" onClick={this.onDec}>Decrement</button>
-        <div>{count}</div>
 
         <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.addUser} users={users} />
