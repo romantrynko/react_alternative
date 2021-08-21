@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { accessToken } from '../../constants';
 import Dropdown from '../dropdown/Dropdown';
 import uniqueId from 'uniqid';
-import { addTodo, removeTodo } from '../../actions';
+import { addTodo, removeTodo, updateTodo } from '../../actions';
 
 
 class TodoPage extends Component {
@@ -12,7 +12,8 @@ class TodoPage extends Component {
     user: '',
     title: '',
     body: '',
-    doneStatus: false
+    doneStatus: false,
+    isEditMode: false
   };
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class TodoPage extends Component {
     })
   };
 
-  addTodo = () => {
+  onAddTodo = () => {
     const { user, title, body, doneStatus } = this.state;
     const { addTodo } = this.props;
 
@@ -82,28 +83,58 @@ class TodoPage extends Component {
 
     addTodo && addTodo(newTodo);
 
-    this.setState({
-      user: '',
-      title: '',
-      body: '',
-      doneStatus: false
-    });
+    this.resetForm()
   };
 
-  removeToDo = (todo) => {
+  onRemoveToDo = (todo) => {
     const { removeTodo } = this.props;
     return () => {
       removeTodo && removeTodo(todo)
     }
-  }
+  };
+
+  onEditTodo = (todo) => {
+    return () => {
+      this.setState({
+        isEditMode: true,
+        ...todo
+      })
+    }
+  };
+
+  onUpdateTodo = () => {
+    const { updateTodo } = this.props;
+    const { user, title, body, doneStatus, id } = this.state;
+
+    updateTodo && updateTodo({
+      user,
+      title,
+      body,
+      doneStatus,
+      id
+    });
+
+    this.resetForm()
+  };
+
+  resetForm = () => {
+    this.setState({
+      user: '',
+      title: '',
+      body: '',
+      doneStatus: false,
+      isEditMode: false,
+      id: ''
+    });
+  };
 
   render() {
-    const { users, user, title, body, doneStatus } = this.state;
+    const { users, user, title, body, doneStatus, isEditMode } = this.state;
     const { todos } = this.props;
 
     return (
-      <div>
-        <h3 className='m-2'>
+      <div >
+        <h3 className='m-2 '>
           Add todo form
         </h3>
         <div className='d-flex flex-column m-2'>
@@ -118,7 +149,10 @@ class TodoPage extends Component {
               Done
             </span>
           </div>
-          <button className='btn btn-primary' onClick={this.addTodo}>Add todo</button>
+          <div className='d-flex flex-row w-50'>
+            {!isEditMode && <button className='btn btn-info m-2' onClick={this.onAddTodo}>Add todo</button>}
+            {isEditMode && <button className='btn btn-success m-2' onClick={this.onUpdateTodo}>Update todo</button>}
+          </div>
         </div>
 
 
@@ -130,8 +164,11 @@ class TodoPage extends Component {
                 <div>User: {user}</div>
                 <div>Title: {title}</div>
                 <div>Body: {body}</div>
-                <div>Is done ? {doneStatus ? 'yes' : 'no'}</div >
-                <button className='btn btn-primary' onClick={this.removeToDo(todo)}>Remove</button>
+                <div>Done: {doneStatus ? 'yes' : 'no'}</div >
+                <div className='d-flex flex-row w-25'>
+                <button className='btn btn-secondary m-2' onClick={this.onEditTodo(todo)}>Edit</button>
+                  <button className='btn btn-danger m-2' onClick={this.onRemoveToDo(todo)}>Remove</button>
+                </div>
               </div>
             )
           })
@@ -159,7 +196,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = ({
   addTodo,
-  removeTodo
+  removeTodo,
+  updateTodo
 });
 
 export default connect(

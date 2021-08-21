@@ -8,6 +8,16 @@ class Dropdown extends Component {
     isOpen: false
   };
 
+  dropDownRef = React.createRef();
+
+  componentDidMount() {
+    document.addEventListener('click', this.onClose);
+  };
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.onClose);
+  };
+
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
@@ -22,19 +32,27 @@ class Dropdown extends Component {
 
     onSelect(value);
 
-    this.setState({ isOpen: false });
+    this.setState({
+      isOpen: false
+    });
   };
 
+  onClose = (event) => {
+    if (this.dropDownRef && !this.dropDownRef.contains(event.target)) {
+
+      this.setState({
+        isOpen: false
+      });
+    }
+  };
 
   render() {
     const { options = [], selectedOption } = this.props;
     const { isOpen } = this.state;
 
     return (
-      <div className='may-drop-down dropdown'>
-
+      <div className='may-drop-down dropdown' ref={this.dropDownRef}>
         <div className='dropdown-toggle' onClick={this.toggle}>{selectedOption}</div>
-
         {
           !!isOpen && <div className='may-drop-down-option-wrapper dropdown-menu show'>
             {
