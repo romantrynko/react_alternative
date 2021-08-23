@@ -119,7 +119,7 @@ class HomePage extends Component {
       <div className='App'>
 
         <PanelFromLecture label='Users' >
-          <AddUserForm onUserAdd={this.onUserAdd} users={users} />
+          <AddUserForm onUserAdd={this.onUserAdd}/>
           {
             users.map(user => <UserCard user={user} key={user.id} />)
           }
