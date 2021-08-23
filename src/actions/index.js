@@ -4,7 +4,8 @@ import {
   INCREMENT,
   REMOVE_TODO,
   UPDATE_TODO,
-  TOGGLE_TODO
+  TOGGLE_TODO,
+  ADD_USER
 } from '../action-types';
 
 export const inc = () => {
@@ -46,5 +47,12 @@ export const toggleTodo = (id) => {
   return {
     type: TOGGLE_TODO,
     payload: id
+  }
+};
+
+export const addUser = (newUser) => {
+  return {
+    type: ADD_USER,
+    payload: newUser
   }
 };

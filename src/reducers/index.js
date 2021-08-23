@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT, UPDATE_TODO, TOGGLE_TODO } from "../action-types";
+import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT, UPDATE_TODO, TOGGLE_TODO, ADD_USER } from "../action-types";
+import { usersList } from '../constants';
 
 const defaultData = {
   count: 0,
@@ -101,9 +102,29 @@ function counter(store = defaultData, action) {
   }
 };
 
+const userDefaultStore = {
+  users: usersList
+};
+
+function usersReducer(store = userDefaultStore, action) {
+  switch (action.type) {
+    case ADD_USER: {
+      const newUser = action.payload;
+      const { users } = store;
+      return {
+        usersList: [newUser, ...users]
+      }
+    }
+
+    default: return store;
+  }
+};
+
+
 export const createRootReducer = () => {
   return combineReducers({
     counter,
-    todoReducer
+    todoReducer,
+    usersReducer
   })
 };

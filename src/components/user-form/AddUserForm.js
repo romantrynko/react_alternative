@@ -29,7 +29,6 @@ class AddUserForm extends Component {
       this.setState({
         warning: 'Please don\'t type numbers'
       });
-
       return;
     };
 
@@ -37,22 +36,24 @@ class AddUserForm extends Component {
       warning: ''
     });
 
-    const newUser = {
+    // const newUser = {
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   email,
+    //   address
+    // };
+
+    onUserAdd && onUserAdd({
       first_name: firstName,
       last_name: lastName,
       email,
       address
-    };
-
-    onUserAdd && onUserAdd(newUser);
+    });
 
     this.onReset();
   };
 
-  focusInput = () => {
-    this.lastNameRef.current.focus();
-  };
-
+  
   onReset = () => {
     this.firstNameRef.current.value = '';
     this.lastNameRef.current.value = '';
@@ -60,6 +61,10 @@ class AddUserForm extends Component {
     this.addressRef.current.value = '';
   };
 
+  focusInput = () => {
+    this.lastNameRef.current.focus();
+  };
+  
   render() {
     return (
       <form className='form' onSubmit={this.onSubmit}>

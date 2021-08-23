@@ -18,7 +18,6 @@ class UsersListPage extends React.Component {
     };
   };
 
-
   render() {
     const { users } = this.state;
 

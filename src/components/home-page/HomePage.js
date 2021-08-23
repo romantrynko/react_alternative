@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { usersList, postsList, allComments } from '../../constants';
+import { postsList, allComments, usersList } from '../../constants';
 import { PostCard } from '../post-card/PostCard';
 import uniqueId from 'uniqid';
 
@@ -16,18 +16,20 @@ import { UsersList } from '../users-list/UsersList';
 import AddUserForm from '../user-form/AddUserForm';
 
 
-import { inc, dec } from '../../actions';
+import { inc, dec, addUser } from '../../actions';
 // import { DECREMENT } from '../../action-types';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
 class HomePage extends Component {
+ 
+    state = {
+      posts: [...postsList],
+      selectedOption: sortingOption[0],
+      users: this.props.users
+    };
+ 
 
-  state = {
-    posts: [...postsList],
-    selectedOption: sortingOption[0],
-    users: usersList
-  };
 
   onSort = (selectedOption) => {
     const [option1, option2] = sortingOption;
@@ -51,6 +53,7 @@ class HomePage extends Component {
 
   onSortByAuthor = () => {
     const res = [...this.state.posts];
+    const { usersList } = this.props;
 
     const result = res.sort(function (a, b) {
       const authorA = usersList.find(user => user.id === a.user_id);
@@ -88,15 +91,23 @@ class HomePage extends Component {
     })
   };
 
-  addUser = (newUser) => {
-    this.setState((prevState) => {
-      return {
-        users: [{
-          ...newUser,
-          id: uniqueId(),
-        }, ...prevState.users]
-      }
-    })
+  // onUserAdd = (newUser) => {
+  //   this.setState((prevState) => {
+  //     return {
+  //       users: [{
+  //         ...newUser,
+  //         id: uniqueId(),
+  //       }, ...prevState.users]
+  //     }
+  //   })
+  // };
+
+  onUserAdd = (newUser) => {
+    const { addUser } = this.props;
+    addUser && addUser({
+      ...newUser,
+      id: uniqueId()
+    });
   };
 
   onInc = () => {
@@ -110,8 +121,8 @@ class HomePage extends Component {
   };
 
   render() {
-    const { posts, selectedOption, users } = this.state;
-    const { count } = this.props;
+    const { posts, selectedOption } = this.state;
+    const { count, users } = this.props;
 
     return (
       <div className='App'>
@@ -120,7 +131,7 @@ class HomePage extends Component {
         <button type="button" className="btn btn-secondary m-2" onClick={this.onDec}>Decrement</button>
 
         <PanelFromLecture label='Users' >
-          <AddUserForm onUserAdd={this.addUser} users={users} />
+          <AddUserForm onUserAdd={this.onUserAdd} users={users} />
           <UsersList users={users} />
         </PanelFromLecture>
 
@@ -163,21 +174,24 @@ class HomePage extends Component {
 };
 
 const mapStateToProps = (state) => {
-  const { counter: { count, property, a } } = state;
+  const {
+    counter: { count, property, a },
+    usersReducer: { users }
+  } = state;
 
   return {
     count,
     property,
-    a
+    a,
+    users
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increment: () => dispatch(inc()),
-    decrement: () => dispatch(dec())
-  }
-}
+const mapDispatchToProps = ({
+  inc,
+  dec,
+  addUser
+});
 
 export default connect(
   mapStateToProps,

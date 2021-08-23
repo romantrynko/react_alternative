@@ -25,7 +25,7 @@ function TodoCard(props) {
       <div>User: {user}</div>
       <div>Title: {title}</div>
       <div>Body: {body}</div>
-      
+    
       <div>
       Done:
         <input className='m-2' type='checkbox' onChange={clickCheckBox} checked={doneStatus} />
