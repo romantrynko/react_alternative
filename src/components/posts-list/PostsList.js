@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { accessToken, usersList } from '../../constants';
 import { PostCard } from '../post-card/PostCard';
+import { getPosts } from '../../actions/postsAction';
 
 import './PostsList.scss';
 
@@ -11,6 +13,7 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
+    this.props.getPosts && this.props.getPosts()
     this.loadPosts();
   };
 
@@ -66,6 +69,17 @@ class PostsList extends Component {
       </div>
     );
   }
-}
+};
 
-export default PostsList;
+const mapStateToProps = (store) => {
+
+};
+
+const mapDispatchToProps = ({
+  getPosts
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PostsList);

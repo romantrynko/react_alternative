@@ -9,3 +9,6 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 export const ADD_USER = 'ADD_USER';
 
+export const POSTS_LOADED = 'POSTS_LOADED';
+
+

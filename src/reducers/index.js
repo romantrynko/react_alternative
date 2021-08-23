@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { ADD_TODO, REMOVE_TODO, INCREMENT, DECREMENT, UPDATE_TODO, TOGGLE_TODO, ADD_USER } from "../action-types";
 import { usersList } from '../constants';
+import { postsReducer } from "./postsReducer";
 
 const defaultData = {
   count: 0,
@@ -124,6 +125,7 @@ export const createRootReducer = () => {
   return combineReducers({
     counter,
     todoReducer,
-    usersReducer
+    usersReducer,
+    postsReducer
   })
 };
