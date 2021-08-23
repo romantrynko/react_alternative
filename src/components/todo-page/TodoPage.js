@@ -119,9 +119,11 @@ class TodoPage extends Component {
   };
 
   onToggleTodo = (id) => {
-    
+    const { toggleTodo } = this.props;
 
-    toggleTodo && toggleTodo(id);
+    return () => {
+      toggleTodo && toggleTodo(id);
+    }
   };
 
   resetForm = () => {
@@ -166,11 +168,11 @@ class TodoPage extends Component {
           todos.map(todo => {
             return (
               <TodoCard
-                todo={todo}
                 key={todo.id}
+                todo={todo}
                 onRemoveToDo={this.onRemoveToDo(todo)}
                 onEditTodo={this.onEditTodo(todo)}
-                onToggleTodo={this.onToggleTodo(todo.id)}
+                toggleTodo={this.onToggleTodo(todo.id)}
               />
             )
           })

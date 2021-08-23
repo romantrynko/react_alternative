@@ -1,8 +1,9 @@
 import React from 'react';
 import './TodoCard.scss';
+import { connect } from 'react-redux';
 
-export default function TodoCard(props) {
-  const { todo, onEditTodo, onRemoveToDo, onToggleTodo } = props;
+function TodoCard(props) {
+  const { todo, onEditTodo, onRemoveToDo, toggleTodo } = props;
 
   if (!todo) return null;
 
@@ -14,9 +15,8 @@ export default function TodoCard(props) {
     onRemoveToDo()
   };
 
-  const onClickToggleTodo = ({ target: { checked }}) => {
-    console.log(checked);
-    onToggleTodo(checked)
+  const clickCheckBox = () => {
+    toggleTodo()
   };
 
   const { user, title, body, doneStatus, id } = todo;
@@ -25,14 +25,17 @@ export default function TodoCard(props) {
       <div>User: {user}</div>
       <div>Title: {title}</div>
       <div>Body: {body}</div>
+      
       <div>
-        Done:
-        <input className='m-2' type='checkbox' onChange={onClickToggleTodo} checked={doneStatus}/>
-      </div >
+      Done:
+        <input className='m-2' type='checkbox' onChange={clickCheckBox} checked={doneStatus} />
+      </div>
       <div className='d-flex flex-row w-25'>
         <button className='btn btn-secondary m-2' onClick={onClickEditTodo}>Edit</button>
         <button className='btn btn-danger m-2' onClick={onClickRemoveToDo}>Remove</button>
       </div>
     </div>
   )
-};
+}; 
+
+export default TodoCard;

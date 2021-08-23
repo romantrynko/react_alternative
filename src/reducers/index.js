@@ -59,6 +59,7 @@ function todoReducer(store = todoDefaultStore, action) {
     }
 
     case TOGGLE_TODO: {
+      console.log('TOGGLE_TODO');
       const id = action.payload;
       const { todos } = store;
       const arrCopy = [...todos];
@@ -69,8 +70,8 @@ function todoReducer(store = todoDefaultStore, action) {
 
         return {
           todos: arrCopy
-        }
-      };
+        };
+      }
       return store;
     }
 
