@@ -12,23 +12,24 @@ import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
 import PostPreview from '../post-preview/PostPreview';
 import PostForm from '../post-form/PostForm';
-import { UsersList } from '../users-list/UsersList';
+
 import AddUserForm from '../user-form/AddUserForm';
 
 
-import { inc, dec, addUser } from '../../actions';
+import { addUser } from '../../actions';
+import { UserCard } from '../user-card/UserCard';
 // import { DECREMENT } from '../../action-types';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
 class HomePage extends Component {
- 
-    state = {
-      posts: [...postsList],
-      selectedOption: sortingOption[0],
-      users: this.props.users
-    };
- 
+
+  state = {
+    posts: [...postsList],
+    selectedOption: sortingOption[0],
+    users: this.props.users
+  };
+
 
 
   onSort = (selectedOption) => {
@@ -110,29 +111,18 @@ class HomePage extends Component {
     });
   };
 
-  onInc = () => {
-    const { increment } = this.props;
-    increment()
-  };
-
-  onDec = () => {
-    const { decrement } = this.props;
-    decrement()
-  };
-
   render() {
+    const { users } = this.props;
     const { posts, selectedOption } = this.state;
-    const { count, users } = this.props;
 
     return (
       <div className='App'>
-        <h2 className='card card-header'>Count: {count}</h2>
-        <button type="button" className="btn btn-secondary m-2" onClick={this.onInc}>Increment</button>
-        <button type="button" className="btn btn-secondary m-2" onClick={this.onDec}>Decrement</button>
 
         <PanelFromLecture label='Users' >
           <AddUserForm onUserAdd={this.onUserAdd} users={users} />
-          <UsersList users={users} />
+          {
+            users.map(user => <UserCard user={user} key={user.id} />)
+          }
         </PanelFromLecture>
 
         <PanelFromLecture label='Post Preview'>
@@ -173,23 +163,17 @@ class HomePage extends Component {
   }
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   const {
-    counter: { count, property, a },
     usersReducer: { users }
-  } = state;
+  } = store;
 
   return {
-    count,
-    property,
-    a,
     users
   }
 };
 
 const mapDispatchToProps = ({
-  inc,
-  dec,
   addUser
 });
 

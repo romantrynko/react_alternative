@@ -112,14 +112,13 @@ function usersReducer(store = userDefaultStore, action) {
       const newUser = action.payload;
       const { users } = store;
       return {
-        usersList: [newUser, ...users]
+        users: [newUser, ...users]
       }
     }
-
+    
     default: return store;
   }
 };
-
 
 export const createRootReducer = () => {
   return combineReducers({

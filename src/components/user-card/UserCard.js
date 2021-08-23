@@ -6,7 +6,6 @@ import './UserCard.scss'
 
 function UserCardComponent(props) {
   const { user, match: { url } } = props;
-  console.log(props);
 
   if (!user) return null;
 

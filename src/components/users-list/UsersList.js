@@ -1,19 +1,19 @@
 import React from 'react'
 import { UserCard } from './../user-card/UserCard';
-import { usersList } from '../../constants';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 
 class UsersListPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const { location: { search } } = props;
+    const { location: { search }, users } = props;
 
     const { page } = queryString.parse(search);
  
     this.state = {
-      users: usersList,
+      users,
       page: page || 1
     };
   };
@@ -22,7 +22,7 @@ class UsersListPage extends React.Component {
     const { users } = this.state;
 
     return (
-      <div className="d-flex">
+      <div className="d-flex flex-wrap">
         {
           users.map((user, index) => {
             return <UserCard
@@ -36,4 +36,15 @@ class UsersListPage extends React.Component {
   }
 };
 
-export const UsersList = withRouter(UsersListPage);
+const mapStateToProps = (store) => {
+  const {
+    usersReducer: { users }
+  } = store;
+
+  return {
+    users
+  }
+};
+
+
+export const UsersList = connect(mapStateToProps)(withRouter(UsersListPage));

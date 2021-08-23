@@ -1,6 +1,5 @@
 import React from 'react';
 import './TodoCard.scss';
-import { connect } from 'react-redux';
 
 function TodoCard(props) {
   const { todo, onEditTodo, onRemoveToDo, toggleTodo } = props;
