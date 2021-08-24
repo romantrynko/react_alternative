@@ -1,7 +1,8 @@
-import { POSTS_LOADED } from "../action-types";
+import { POSTS_LOADED, START_POSTS_LOADING, STOP_POSTS_LOADING } from "../action-types";
 
 const defaultValue = {
-  posts: []
+  posts: [],
+  isPostsLoading: false
 };
 
 export const postsReducer = (store = defaultValue, action) => {
@@ -12,6 +13,21 @@ export const postsReducer = (store = defaultValue, action) => {
         posts: action.payload
       }
     }
+
+    case START_POSTS_LOADING: {
+      return {
+        ...store,
+        isPostsLoading: true
+      }
+    }
+
+    case STOP_POSTS_LOADING: {
+      return {
+        ...store,
+        isPostsLoading: false
+      }
+    }
+
     default: return store;
   }
 };

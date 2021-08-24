@@ -1,26 +1,10 @@
 import {
   ADD_TODO,
-  DECREMENT,
-  INCREMENT,
   REMOVE_TODO,
   UPDATE_TODO,
   TOGGLE_TODO,
   ADD_USER
 } from '../action-types';
-
-export const inc = () => {
-  return {
-    type: INCREMENT,
-    payload: 5
-  }
-};
-
-export const dec = () => {
-  return {
-    type: DECREMENT,
-    payload: 2
-  }
-};
 
 export const addTodo = (newTodo) => {
   return {

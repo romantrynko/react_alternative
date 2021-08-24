@@ -83,6 +83,11 @@ class PostCardComponent extends PureComponent {
     const { title, body } = post;
     const { comments, showComments, error, isCommentsLoading, commentsLoaded } = this.state;
 
+    if (!post) {
+      console.log('post is not defined');
+      return null;
+    }
+
     const kittyUrl = `https://cataas.com/cat/says/hello%20world!?${Math.random() * 1000}`;
 
     const renderImage = () => {

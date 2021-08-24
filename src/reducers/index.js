@@ -121,7 +121,7 @@ function usersReducer(store = userDefaultStore, action) {
   }
 };
 
-export const createRootReducer = () => {
+export const rootReducer = () => {
   return combineReducers({
     counter,
     todoReducer,

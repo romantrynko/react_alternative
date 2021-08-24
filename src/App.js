@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HomePage from './components/home-page/HomePage';
-import PostPreview from './components/post-preview/PostPreview';
+import { PostPreview } from './components/post-preview/PostPreview';
 import NotFoundPage from './components/not-found-page/NotFoundPage';
 import PostsList from './components/posts-list/PostsList';
 import { postsList } from './constants';
@@ -52,18 +52,18 @@ class App extends Component {
 
             <Route path='/post-preview' render={(routerProps) => {
               return (
-                <PostPreview posts={postsList} {...routerProps} />
+                <PostPreview {...routerProps} />
               )
             }} />
 
-            <Route path='/todos' component={TodoPage} exact/>
+            <Route path='/todos' component={TodoPage} exact />
 
             <Redirect from='/' to='/home' />
 
             <Route path='*'>
               <NotFoundPage />
             </Route>
-          
+
 
           </Switch>
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { postsList, allComments, usersList } from '../../constants';
 import { PostCard } from '../post-card/PostCard';
@@ -10,15 +11,14 @@ import './HomePage.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PanelFromLecture from '../panel/PanelFromLecture';
 import Dropdown from '../dropdown/Dropdown';
-import PostPreview from '../post-preview/PostPreview';
+import { PostPreview } from '../post-preview/PostPreview';
 import PostForm from '../post-form/PostForm';
 
 import AddUserForm from '../user-form/AddUserForm';
 
 
-import { addUser } from '../../actions';
+import * as allActions from '../../actions';
 import { UserCard } from '../user-card/UserCard';
-// import { DECREMENT } from '../../action-types';
 
 const sortingOption = ['Sort by default', 'Sort by author'];
 
@@ -92,17 +92,6 @@ class HomePage extends Component {
     })
   };
 
-  // onUserAdd = (newUser) => {
-  //   this.setState((prevState) => {
-  //     return {
-  //       users: [{
-  //         ...newUser,
-  //         id: uniqueId(),
-  //       }, ...prevState.users]
-  //     }
-  //   })
-  // };
-
   onUserAdd = (newUser) => {
     const { addUser } = this.props;
     addUser && addUser({
@@ -119,14 +108,14 @@ class HomePage extends Component {
       <div className='App'>
 
         <PanelFromLecture label='Users' >
-          <AddUserForm onUserAdd={this.onUserAdd}/>
+          <AddUserForm onUserAdd={this.onUserAdd} />
           {
             users.map(user => <UserCard user={user} key={user.id} />)
           }
         </PanelFromLecture>
 
         <PanelFromLecture label='Post Preview'>
-          <PostPreview posts={posts} />
+          <PostPreview />
         </PanelFromLecture>
 
         <PanelFromLecture label='Posts'>
@@ -173,8 +162,11 @@ const mapStateToProps = (store) => {
   }
 };
 
-const mapDispatchToProps = ({
-  addUser
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators({
+    ...allActions
+  },
+    dispatch)
 });
 
 export default connect(

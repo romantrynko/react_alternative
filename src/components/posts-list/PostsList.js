@@ -1,53 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { accessToken, usersList } from '../../constants';
+
 import { PostCard } from '../post-card/PostCard';
 import { getPosts } from '../../actions/postsAction';
 
 import './PostsList.scss';
 
 class PostsList extends Component {
-  state = {
-    posts: [],
-    isLoading: false
-  };
-
   componentDidMount() {
-    this.props.getPosts && this.props.getPosts()
-    this.loadPosts();
-  };
-
-  loadPosts = async () => {
-    this.setState({
-      isLoading: true
-    });
-
-    let response = await fetch(`https://gorest.co.in/public-api/posts?access-token=${accessToken}`);
-
-    if (response.ok) {
-      let json = await response.json();
-
-      const result = json.data;
-
-      if (Array.isArray(result)) {
-        this.setState({
-          isLoading: false,
-          erros: '',
-          posts: result || []
-        });
-
-      } else {
-
-        this.setState({
-          isLoading: false,
-          error: response.status
-        })
-      }
+    const { posts, getPosts } = this.props;
+    if (!posts.length) {
+      getPosts && getPosts()
     }
   };
 
   render() {
-    const { posts, isLoading } = this.state;
+    const { posts, isLoading, usersList } = this.props;
 
     return (
       <div className='posts-list'>
@@ -72,7 +40,16 @@ class PostsList extends Component {
 };
 
 const mapStateToProps = (store) => {
+  const {
+    postsReducer: { posts, isPostsLoading },
+    usersReducer: { users }
+  } = store;
 
+  return {
+    posts,
+    usersList: users,
+    isLoading: isPostsLoading
+  }
 };
 
 const mapDispatchToProps = ({
@@ -80,6 +57,6 @@ const mapDispatchToProps = ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PostsList);
